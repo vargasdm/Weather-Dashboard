@@ -1,11 +1,27 @@
 var APIKey = "02033f41b7ba4948cda8476745ac5025";
-
+var cityName;
+var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
 // WHEN I search for a city
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
     // need text area where I can input a city
     // need a click event listener for search button
         // need a function that will use the textarea input as parameters ( somhow convert the name into coordinates that can be used by the api ) for the fetch function
-            
+        $("#search").click(function (event) {
+            // event.preventDefault();
+            // variable that uses "this" to refer to the click event that involves the save button in one of the hour blocks. .siblings is used to access the sibling <textarea> element. .val() is used to access the value from that element
+            cityName = $(this).siblings('textarea').val();  
+            console.log(cityName);
+
+            fetch(queryURL, {})
+                .then(function (response) {
+                return response.json();
+                })
+                .then(function (data) {
+                console.log(data);
+                });
+        })
+        
+          
 // WHEN I view current weather conditions for that city
 // THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
 
