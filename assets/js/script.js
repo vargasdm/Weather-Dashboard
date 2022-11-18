@@ -1,6 +1,7 @@
 var APIKey = "02033f41b7ba4948cda8476745ac5025";
 var cityName;
-var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
+var searchHistory = document.getElementById('searchHistoryl');
+// var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
 // WHEN I search for a city
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
     // need text area where I can input a city
@@ -11,13 +12,18 @@ var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + 
             // variable that uses "this" to refer to the click event that involves the save button in one of the hour blocks. .siblings is used to access the sibling <textarea> element. .val() is used to access the value from that element
             cityName = $(this).siblings('textarea').val();  
             console.log(cityName);
-
+            var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
             fetch(queryURL, {})
                 .then(function (response) {
                 return response.json();
                 })
                 .then(function (data) {
                 console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    var listItem = document.createElement('button');
+                    listItem.textContent = data[i].weather.description;
+                    repoList.appendChild(listItem);
+                  };
                 });
         })
         
