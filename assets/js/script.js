@@ -2,6 +2,7 @@ var APIKey = "02033f41b7ba4948cda8476745ac5025";
 var cityName;
 var searchHistory = document.getElementById('searchHistory');
 var baseURL = "http://api.openweathermap.org/data/2.5/weather?q=";
+// var searchArr = JSON.parse(localStorage.getItem("cityName")) || [];
 // var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
 // WHEN I search for a city
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
@@ -20,14 +21,41 @@ var baseURL = "http://api.openweathermap.org/data/2.5/weather?q=";
                 console.log(data);
                 console.log(data.weather[0].description);
                 
-                for (var i = 0; i < data.length; i++) {
-                    var listItem = document.createElement('button');
-                    listItem.textContent = data[i].name;
-                    // need to give these buttons a class
-                    searchHistory.appendChild(listItem);
-                  };
-                });
-        })
+                // local storage
+                if (cityName !== "") {
+                    var searchArr = JSON.parse(localStorage.getItem("cityName")) || [];
+                    console.log(searchArr);
+                    searchArr.push(cityName);
+                    console.log(searchArr);
+                // localStorage.setItem(cityName, cityName);
+                localStorage.setItem("cityName", cityName);
+                }
+                })
+            });
+
+
+
+
+
+        // function getSearch() {
+        //     var highscoresArr = JSON.parse(localStorage.getItem("highscores")) || [];
+        //     for (var i = 0; i < searchArr.length; i++) {
+        //         var listItem = document.createElement('button');
+        //             listItem.textContent = data[i].name;
+        //                     // need to give these buttons a class
+        //             searchHistory.appendChild(listItem);
+        //         };
+        // }
+
+
+        //         for (var i = 0; i < data.length; i++) {
+        //             var listItem = document.createElement('button');
+        //             listItem.textContent = data[i].name;
+        //             // need to give these buttons a class
+        //             searchHistory.appendChild(listItem);
+        //           };
+        //         });
+        // })
         
           
 // WHEN I view current weather conditions for that city
