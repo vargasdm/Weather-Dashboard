@@ -21,31 +21,38 @@ var baseURL = "http://api.openweathermap.org/data/2.5/weather?q=";
                 console.log(data);
                 console.log(data.weather[0].description);
                 
-                // local storage
-                if (cityName !== "") {
-                    var searchArr = JSON.parse(localStorage.getItem("cityName")) || [];
-                    console.log(searchArr);
-                    searchArr.push(cityName);
-                    console.log(searchArr);
-                // localStorage.setItem(cityName, cityName);
-                localStorage.setItem("cityName", cityName);
-                }
-                })
+             
             });
+            appendLocalStorage();
+            renderSearchHistory();
+        });
+
+
+   // local storage
+   function appendLocalStorage() {
+    if (cityName !== "") {
+        var searchArr = JSON.parse(localStorage.getItem("cityName")) || [];
+        console.log(searchArr);
+        searchArr.push(cityName);
+        console.log(searchArr);
+    // localStorage.setItem(cityName, cityName);
+    localStorage.setItem("cityName", cityName);
+    }
+   }
+ 
 
 
 
 
-
-        // function getSearch() {
-        //     var highscoresArr = JSON.parse(localStorage.getItem("highscores")) || [];
-        //     for (var i = 0; i < searchArr.length; i++) {
-        //         var listItem = document.createElement('button');
-        //             listItem.textContent = data[i].name;
-        //                     // need to give these buttons a class
-        //             searchHistory.appendChild(listItem);
-        //         };
-        // }
+        function renderSearchHistory() {
+            var highscoresArr = JSON.parse(localStorage.getItem("highscores")) || [];
+            for (var i = 0; i < searchArr.length; i++) {
+                var listItem = document.createElement('button');
+                    listItem.textContent = data[i].name;
+                            // need to give these buttons a class
+                    searchHistory.appendChild(listItem);
+                };
+        }
 
 
         //         for (var i = 0; i < data.length; i++) {
