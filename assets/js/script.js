@@ -19,10 +19,11 @@ var searchHistory = document.getElementById('searchHistoryl');
                 })
                 .then(function (data) {
                 console.log(data);
+                console.log(data.weather[0].description);
                 for (var i = 0; i < data.length; i++) {
                     var listItem = document.createElement('button');
                     listItem.textContent = data[i].weather.description;
-                    repoList.appendChild(listItem);
+                    searchHistory.appendChild(listItem);
                   };
                 });
         })
