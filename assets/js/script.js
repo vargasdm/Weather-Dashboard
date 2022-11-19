@@ -1,10 +1,12 @@
 var APIKey = "02033f41b7ba4948cda8476745ac5025";
 var cityName;
-var searchHistory = document.getElementById('searchHistory');
+var searchHistory = document.getElementById('search-history');
 var baseURL = "http://api.openweathermap.org/data/2.5/weather?q=";
 var searchArr = localStorage.getItem("city-name") || [];
 var searchHistoryList = [];
 var weatherData;
+var currentWeatherEl = document.getElementById('current-weather');
+
 // var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
 // WHEN I search for a city
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
@@ -26,12 +28,26 @@ var weatherData;
                 console.log(weatherData);
                 console.log(weatherData.name)
                 
-             
+                function displayCurrentWeather() {
+                    currentWeatherEl.innerHTML = "";
+                    console.log(currentWeatherName)
+                    var currentWeatherName = document.createElement('h2');
+                    currentWeatherName.textContent = weatherData.name;
+                    console.log(currentWeatherName)
+                    currentWeatherEl.appendChild(currentWeatherName);
+
+                    console.log(weatherData.dt)
+                    var date = dayjs.unix(weatherData.dt).format('MMM D, YYYY, hh:mm:ss a')
+                    var currentWeatherDate = document.createElement('p');
+                    currentWeatherDate.textContent = date;
+                    currentWeatherEl.appendChild(currentWeatherDate);
+
+                    console.log(weatherData.weather.icon)
+                }
+            displayCurrentWeather();
             });
             appendLocalStorage();
-            // var historyButtons = document.getElementsByClassName("searchHistoryButton")
-            // console.log(historyButtons)
-            // historyButtons.remove();
+            
         });
 
 
@@ -49,7 +65,7 @@ var weatherData;
         }
         
    }
- 
+
 
 
 
@@ -61,7 +77,7 @@ var weatherData;
         for (var i = searchHistoryList.length - 1; i >= 0; i--) {
             var searchHistoryItem = document.createElement('button');
             searchHistoryItem.textContent = searchHistoryList[i];
-            searchHistoryItem.classList.add("searchHistoryButton")
+            searchHistoryItem.classList.add("search-history-button")
             searchHistoryItem.style.display = "block";
             console.log(searchHistory.textContent);
             searchHistory.appendChild(searchHistoryItem);
@@ -70,7 +86,8 @@ var weatherData;
         
     };
 
-        
+    
+
           
 // WHEN I view current weather conditions for that city
 // THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
