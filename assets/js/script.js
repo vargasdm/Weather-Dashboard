@@ -41,8 +41,14 @@ var currentWeatherEl = document.getElementById('current-weather');
                     var currentWeatherDate = document.createElement('p');
                     currentWeatherDate.textContent = date;
                     currentWeatherEl.appendChild(currentWeatherDate);
+                    
+                    
+                    console.log(weatherData.weather[0].icon)
+                    var currentWeatherIcon = document.createElement('img');
+                    currentWeatherIcon.content = weatherData.weather[0].icon;
+                    currentWeatherEl.appendChild(currentWeatherIcon);
 
-                    console.log(weatherData.weather.icon)
+                    
                 }
             displayCurrentWeather();
             });
