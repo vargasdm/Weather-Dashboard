@@ -29,7 +29,7 @@ var weatherData;
              
             });
             appendLocalStorage();
-            renderSearchHistory();
+            // renderSearchHistory();
         });
 
 
@@ -37,11 +37,12 @@ var weatherData;
    function appendLocalStorage() {
         if (cityName !== "") {
             console.log(searchArr);
+            localStorage.setItem(cityName, cityName);
+            localStorage.setItem("cityName", cityName);
             if (cityName.indexOf(searchArr) === -1) {
                 searchArr.push(cityName);
                 console.log(searchArr);
-                localStorage.setItem(cityName, cityName);
-                localStorage.setItem("cityName", cityName);
+                renderSearchHistory();
             } else {
                 return;
             }
