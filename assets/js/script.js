@@ -3,6 +3,7 @@ var cityName;
 var searchHistory = document.getElementById('searchHistory');
 var baseURL = "http://api.openweathermap.org/data/2.5/weather?q=";
 var searchArr = localStorage.getItem("cityName") || [];
+var searchHistoryList = [];
 var weatherData;
 // var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
 // WHEN I search for a city
@@ -50,14 +51,17 @@ var weatherData;
 
 
     function renderSearchHistory() {
-        for (var i = 0; i < searchArr.length; i++) {
+        searchHistoryList = searchArr;
+        console.log(searchHistoryList);
+        for (var i = searchHistoryList.length - 1; i >= 0; i--) {
             var searchHistoryItem = document.createElement('button');
-            searchHistoryItem.textContent = weatherData.name;
-                            // need to give these buttons a class
-                searchHistory.appendChild(searchHistoryItem);
-                console.log(searchHistory.textContent);
-        };
-    }
+            searchHistoryItem.textContent = searchHistoryList[i];
+            searchHistoryItem.classList.add("searchHistorybutton")
+            searchHistoryItem.style.display = "block";
+            console.log(searchHistory.textContent);
+            searchHistory.appendChild(searchHistoryItem);
+        }
+    };
 
         
           
