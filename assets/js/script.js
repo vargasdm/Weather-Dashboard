@@ -1,11 +1,18 @@
 var APIKey = "02033f41b7ba4948cda8476745ac5025";
 var cityName;
 var searchHistory = document.getElementById('search-history');
-var baseURL = "http://api.openweathermap.org/data/2.5/weather?q=";
+var baseUrl = "http://api.openweathermap.org/data/2.5/weather?q=";
+var fiveDayBaseUrl = "api.openweathermap.org/data/2.5/forecast?"
+var geocodeBaseUrl = "http://api.openweathermap.org/geo/1.0/direct?q="
 var searchArr = localStorage.getItem("city-name") || [];
 var searchHistoryList = [];
 var weatherData;
 var currentWeatherEl = document.getElementById('current-weather');
+var fiveDayForecastEl = document.getElementById("five-day");
+
+// will need to figure this out eventually
+// window.onload = appendLocalStorage();
+
 
 // var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
 // WHEN I search for a city
@@ -16,7 +23,8 @@ var currentWeatherEl = document.getElementById('current-weather');
         $("#search").click(function (event) {
             cityName = $(this).siblings('textarea').val();  
             console.log(cityName);
-            var queryURL = baseURL + cityName + "&appid=" + APIKey;
+            var queryURL = baseUrl + cityName + "&appid=" + APIKey + "&units=imperial";
+        //    fetching data for the daily forecast
             fetch(queryURL, {})
                 .then(function (response) {
                 return response.json();
@@ -27,7 +35,33 @@ var currentWeatherEl = document.getElementById('current-weather');
                 weatherData = data;
                 console.log(weatherData);
                 console.log(weatherData.name)
-                
+            
+            // fetching data to get eh lat and lon values for the searched city to be used in teh 5 day forecast fetch request
+                var queryGeoUrl = geocodeBaseUrl + cityName + "&appid=" + APIKey
+            fetch(queryGeoUrl, {})
+                .then(function (response) {
+                    return response.json();
+                    })
+                    .then(function (data) {
+                    console.log(data);
+                var geoData = data
+                console.log(geoData);
+                var geoLat = geoData[0].lat
+                console.log(geoLat);
+                var geoLon = geoData[0].lon
+                console.log(geoLon);
+
+                // fetching data for the 5 day forcast
+                var queryFiveDayUrl = fiveDayBaseUrl + "lat=" + geoLat + "&lon=" + geoLon + "&appid=" + APIKey + "&units=imperial";
+                console.log(queryFiveDayUrl);
+            fetch(queryFiveDayUrl, {})
+                .then(function (response) {
+                    return response.json();
+                    })
+                    .then(function (data) {
+                    console.log(data);
+// WHEN I view current weather conditions for that city
+// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
                 function displayCurrentWeather() {
                     currentWeatherEl.innerHTML = "";
                     console.log(currentWeatherName)
@@ -42,23 +76,40 @@ var currentWeatherEl = document.getElementById('current-weather');
                     currentWeatherDate.textContent = date;
                     currentWeatherEl.appendChild(currentWeatherDate);
                     
-                    
                     console.log(weatherData.weather[0].icon)
-                    
                     var currentWeatherIcon = document.createElement('img');
-                    var iconUrl = `https://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`;
-                    currentWeatherIcon.setAttribute('src', 'iconURL');
-                    // currentWeatherIcon.textcontent = weatherData.weather[0].icon;
+                    var iconUrl = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
+                    currentWeatherIcon.setAttribute('src', iconUrl);
                     currentWeatherEl.appendChild(currentWeatherIcon);
 
-                    
-                }
-            displayCurrentWeather();
-            });
-            appendLocalStorage();
-            
-        });
+                    var currentWeatherTemp = document.createElement('p');
+                    currentWeatherTemp.textContent = "Temp: " + weatherData.main.temp + "°F";
+                    console.log(currentWeatherTemp)
+                    currentWeatherEl.appendChild(currentWeatherTemp);
 
+                    var currentWeatherHum = document.createElement('p');
+                    currentWeatherHum.textContent = "Humidity: " + weatherData.main.humidity + "%";
+                    console.log(currentWeatherHum)
+                    currentWeatherEl.appendChild(currentWeatherHum);
+
+                    var currentWeatherWind = document.createElement('p');
+                    currentWeatherWind.textContent = "Wind: " + weatherData.wind.speed + " MPH";
+                    console.log(currentWeatherWind)
+                    currentWeatherEl.appendChild(currentWeatherWind); 
+                }
+
+                // function fiveDayForecast() {
+                //     fiveDayForecastEl.innerHTML = ""
+                //     var dayOneDiv = document.createElement('div');
+                //     var  
+                // }
+
+            appendLocalStorage();
+            displayCurrentWeather();
+                });   
+            });
+        })
+    })
 
    // local storage
    function appendLocalStorage() {
@@ -74,10 +125,6 @@ var currentWeatherEl = document.getElementById('current-weather');
         }
         
    }
-
-
-
-
 
     function renderSearchHistory() {
         searchHistoryList = searchArr;
@@ -98,8 +145,7 @@ var currentWeatherEl = document.getElementById('current-weather');
     
 
           
-// WHEN I view current weather conditions for that city
-// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
+
 
             // need fetch function to grab current city name, date, icon that represents weather conditions (Im not sure if that is somehting included in the api or something I have to make), temp, humidity, and windspeed all based on teh input from the text area
                 // this info will need to be rendered to speciofic div 
