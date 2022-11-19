@@ -2,7 +2,7 @@ var APIKey = "02033f41b7ba4948cda8476745ac5025";
 var cityName;
 var searchHistory = document.getElementById('searchHistory');
 var baseURL = "http://api.openweathermap.org/data/2.5/weather?q=";
-var searchArr = localStorage.getItem("cityName") || [];
+var searchArr = localStorage.getItem("city-name") || [];
 var searchHistoryList = [];
 var weatherData;
 // var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
@@ -29,7 +29,9 @@ var weatherData;
              
             });
             appendLocalStorage();
-            // renderSearchHistory();
+            // var historyButtons = document.getElementsByClassName("searchHistoryButton")
+            // console.log(historyButtons)
+            // historyButtons.remove();
         });
 
 
@@ -37,15 +39,13 @@ var weatherData;
    function appendLocalStorage() {
         if (cityName !== "") {
             console.log(searchArr);
-            localStorage.setItem(cityName, cityName);
-            localStorage.setItem("cityName", cityName);
-            if (cityName.indexOf(searchArr) === -1) {
-                searchArr.push(cityName);
-                console.log(searchArr);
-                renderSearchHistory();
-            } else {
+
+            if (searchArr.indexOf(cityName) !== -1) {
                 return;
-            }
+             }
+             searchArr.push(cityName) 
+             localStorage.setItem('city-name', JSON.stringify(searchArr))
+             renderSearchHistory()
         }
         
    }
@@ -60,7 +60,7 @@ var weatherData;
         for (var i = searchHistoryList.length - 1; i >= 0; i--) {
             var searchHistoryItem = document.createElement('button');
             searchHistoryItem.textContent = searchHistoryList[i];
-            searchHistoryItem.classList.add("searchHistorybutton")
+            searchHistoryItem.classList.add("searchHistoryButton")
             searchHistoryItem.style.display = "block";
             console.log(searchHistory.textContent);
             searchHistory.appendChild(searchHistoryItem);
