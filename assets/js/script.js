@@ -2,7 +2,7 @@ var APIKey = "02033f41b7ba4948cda8476745ac5025";
 var cityName;
 var searchHistory = document.getElementById('search-history');
 var baseUrl = "http://api.openweathermap.org/data/2.5/weather?q=";
-var fiveDayBaseUrl = "api.openweathermap.org/data/2.5/forecast?"
+var fiveDayBaseUrl = "http://api.openweathermap.org/data/2.5/forecast?"
 var geocodeBaseUrl = "http://api.openweathermap.org/geo/1.0/direct?q="
 var searchArr = localStorage.getItem("city-name") || [];
 var searchHistoryList = [];
@@ -60,6 +60,8 @@ var fiveDayForecastEl = document.getElementById("five-day");
                     })
                     .then(function (data) {
                     console.log(data);
+                var fiveDayWeather = data.list.slice(0, 5);
+                console.log(fiveDayWeather)
 // WHEN I view current weather conditions for that city
 // THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
                 function displayCurrentWeather() {
@@ -98,14 +100,41 @@ var fiveDayForecastEl = document.getElementById("five-day");
                     currentWeatherEl.appendChild(currentWeatherWind); 
                 }
 
-                // function fiveDayForecast() {
-                //     fiveDayForecastEl.innerHTML = ""
-                //     var dayOneDiv = document.createElement('div');
-                //     var  
-                // }
+                function fiveDayForecast() {
+                    fiveDayForecastEl.innerHTML = ""
+                    for (var i = 0; i <= fiveDayWeather.length; i++) {
+                        var newDayEl = document.createElement('div');
+                        fiveDayForecastEl.appendChild(newDayEl);
+
+                        var newDate = document.createElement('h3');
+                        var newDayDate = dayjs.unix(fiveDayWeather[i].dt).format('MMM D, YYYY, hh:mm:ss a')
+                        newDate.textContent = newDayDate;
+                        newDayEl.appendChild(newDate);
+
+                        var newDayWeatherIcon = document.createElement('img');
+                        var forecastIconUrl = `https://openweathermap.org/img/wn/${fiveDayWeather[i].weather[0].icon}.png`;
+                        newDayWeatherIcon.setAttribute('src', forecastIconUrl);
+                        newDayEl.appendChild(newDayWeatherIcon);
+
+                        var newDayTemp = document.createElement('p');
+                        newDayTemp.textContent = "Temp: " + fiveDayWeather[i].main.temp + "°F";
+                        newDayEl.appendChild(newDayTemp);
+
+                        var newDayHum = document.createElement('p');
+                        newDayHum.textContent = "Humidity: " + weatherData.main.humidity + "%";
+                        newDayEl.appendChild(newDayHum);
+
+                        var newDayWind = document.createElement('p');
+                        newDayWind.textContent = "Wind: " + weatherData.wind.speed + " MPH";
+                        newDayEl.appendChild(newDayWind); 
+
+                    }
+                }
+
 
             appendLocalStorage();
             displayCurrentWeather();
+            fiveDayForecast()
                 });   
             });
         })
