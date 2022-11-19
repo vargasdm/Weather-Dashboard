@@ -44,8 +44,11 @@ var currentWeatherEl = document.getElementById('current-weather');
                     
                     
                     console.log(weatherData.weather[0].icon)
+                    
                     var currentWeatherIcon = document.createElement('img');
-                    currentWeatherIcon.content = weatherData.weather[0].icon;
+                    var iconUrl = `https://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`;
+                    currentWeatherIcon.setAttribute('src', 'iconURL');
+                    // currentWeatherIcon.textcontent = weatherData.weather[0].icon;
                     currentWeatherEl.appendChild(currentWeatherIcon);
 
                     
