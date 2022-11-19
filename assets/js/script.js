@@ -57,6 +57,7 @@ var weatherData;
     function renderSearchHistory() {
         searchHistoryList = searchArr;
         console.log(searchHistoryList);
+        searchHistory.innerHTML = "";
         for (var i = searchHistoryList.length - 1; i >= 0; i--) {
             var searchHistoryItem = document.createElement('button');
             searchHistoryItem.textContent = searchHistoryList[i];
