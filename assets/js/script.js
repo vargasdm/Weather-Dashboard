@@ -35,15 +35,18 @@ var weatherData;
 
    // local storage
    function appendLocalStorage() {
-    if (cityName !== "") {
-        console.log(searchArr);
-        searchArr.push(cityName);
-        console.log(searchArr);
-    localStorage.setItem(cityName, cityName);
-    localStorage.setItem("cityName", cityName);
-    } else {
-        return;
-    }
+        if (cityName !== "") {
+            console.log(searchArr);
+            if (cityName.indexOf(searchArr) === -1) {
+                searchArr.push(cityName);
+                console.log(searchArr);
+                localStorage.setItem(cityName, cityName);
+                localStorage.setItem("cityName", cityName);
+            } else {
+                return;
+            }
+        }
+        
    }
  
 
@@ -60,7 +63,9 @@ var weatherData;
             searchHistoryItem.style.display = "block";
             console.log(searchHistory.textContent);
             searchHistory.appendChild(searchHistoryItem);
+            
         }
+        
     };
 
         
