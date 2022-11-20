@@ -11,7 +11,7 @@ var currentWeatherEl = document.getElementById('current-weather');
 var fiveDayForecastEl = document.getElementById("five-day");
 var timeStamps = []
 // will need to figure this out eventually
-// window.onload = appendLocalStorage();
+window.onload = renderSearchHistory();
 
 
 // var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
@@ -64,12 +64,11 @@ var timeStamps = []
                     // for loop to get the 12 pm weather indexes from data
                     var fiveDayWeather = data.list;
                     console.log(fiveDayWeather)
-                for (var i = 4; i < fiveDayWeather.length; i+6) {
-                    console.log(i)
-                    timeStamps.push(fiveDayWeather[i])
-                    console.log(timeStamps)
+                var timeStamps = fiveDayWeather.filter(onePm);
+                function onePm(data) {
+                    var parsedDate = dayjs.unix(data.dt);
+                    return parsedDate.$H === 13;                   
                 }
-
 // WHEN I view current weather conditions for that city
 // THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
                 function displayCurrentWeather() {
@@ -81,7 +80,8 @@ var timeStamps = []
                     currentWeatherEl.appendChild(currentWeatherName);
 
                     console.log(weatherData.dt)
-                    var date = dayjs.unix(weatherData.dt).format('MMM D, YYYY, hh:mm:ss a')
+                    var date = dayjs.unix(weatherData.dt) //.format('MMM D, YYYY, hh:mm:ss a');
+                    console.log(date);
                     var currentWeatherDate = document.createElement('p');
                     currentWeatherDate.textContent = date;
                     currentWeatherEl.appendChild(currentWeatherDate);
@@ -176,7 +176,6 @@ var timeStamps = []
             searchHistory.appendChild(searchHistoryItem);
             
         }
-        
     };
 
     
