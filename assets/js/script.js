@@ -143,15 +143,15 @@ window.onload = renderSearchHistory();
              localStorage.setItem('city-name', JSON.stringify(searchArr))
              renderSearchHistory()
         }
-        
    }
 
     function renderSearchHistory() {
         searchHistory.innerHTML = "";
-        searchHistoryList = searchArr;
+        searchHistoryList = JSON.parse(searchArr);
         console.log(searchHistoryList);
         
-        for (var i = searchHistoryList.length - 1; i >= 0; i--) {
+        for (var i = 0; i < searchHistoryList.length; i++) {
+            localStorage.getItem("city-name")
             var searchHistoryItem = document.createElement('button');
             searchHistoryItem.textContent = searchHistoryList[i];
             searchHistoryItem.classList.add("search-history-button")
