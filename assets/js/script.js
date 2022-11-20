@@ -63,8 +63,9 @@ var timeStamps = []
                     
                     // for loop to get the 12 pm weather indexes from data
                     var fiveDayWeather = data.list;
-                for (var i = 0; i < fiveDayWeather.length; i++) {
-                    if (fiveDayWeather[i].dt_txt === "18:00:00" || fiveDayWeather[i].dt_txt === "2022-11-21 18:00:00" || fiveDayWeather[i].dt_txt === "2022-11-22 18:00:00" ||fiveDayWeather[i].dt_txt === "2022-11-23 18:00:00" ||fiveDayWeather[i].dt_txt === "2022-11-24 12:00:00")
+                    console.log(fiveDayWeather)
+                for (var i = 4; i < fiveDayWeather.length; i+6) {
+                    console.log(i)
                     timeStamps.push(fiveDayWeather[i])
                     console.log(timeStamps)
                 }
