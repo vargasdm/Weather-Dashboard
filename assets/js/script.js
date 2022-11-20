@@ -63,8 +63,8 @@ var timeStamps = []
                     
                     // for loop to get the 12 pm weather indexes from data
                     var fiveDayWeather = data.list;
-                for (var i = 0; i <= fiveDayWeather.length; i++) {
-                    if (fiveDayWeather[i].dt_txt === "2022-11-20 12:00:00" || fiveDayWeather[i].dt_txt === "2022-11-21 12:00:00" || fiveDayWeather[i].dt_txt === "2022-11-22 12:00:00" ||fiveDayWeather[i].dt_txt === "2022-11-23 12:00:00" ||fiveDayWeather[i].dt_txt === "2022-11-24 12:00:00")
+                for (var i = 0; i < fiveDayWeather.length; i++) {
+                    if (fiveDayWeather[i].dt_txt === "18:00:00" || fiveDayWeather[i].dt_txt === "2022-11-21 18:00:00" || fiveDayWeather[i].dt_txt === "2022-11-22 18:00:00" ||fiveDayWeather[i].dt_txt === "2022-11-23 18:00:00" ||fiveDayWeather[i].dt_txt === "2022-11-24 12:00:00")
                     timeStamps.push(fiveDayWeather[i])
                     console.log(timeStamps)
                 }
@@ -109,22 +109,22 @@ var timeStamps = []
 
                 function fiveDayForecast() {
                     fiveDayForecastEl.innerHTML = ""
-                    for (var i = 0; i <= fiveDayWeather.length; i++) {
+                    for (var i = 0; i < timeStamps.length; i++) {
                         var newDayEl = document.createElement('div');
                         fiveDayForecastEl.appendChild(newDayEl);
 
                         var newDate = document.createElement('h3');
-                        var newDayDate = dayjs.unix(fiveDayWeather[i].dt).format('MMM D, YYYY, hh:mm:ss a')
+                        var newDayDate = dayjs.unix(timeStamps[i].dt).format('MMM D, YYYY, hh:mm:ss a')
                         newDate.textContent = newDayDate;
                         newDayEl.appendChild(newDate);
 
                         var newDayWeatherIcon = document.createElement('img');
-                        var forecastIconUrl = `https://openweathermap.org/img/wn/${fiveDayWeather[i].weather[0].icon}.png`;
+                        var forecastIconUrl = `https://openweathermap.org/img/wn/${timeStamps[i].weather[0].icon}.png`;
                         newDayWeatherIcon.setAttribute('src', forecastIconUrl);
                         newDayEl.appendChild(newDayWeatherIcon);
 
                         var newDayTemp = document.createElement('p');
-                        newDayTemp.textContent = "Temp: " + fiveDayWeather[i].main.temp + "°F";
+                        newDayTemp.textContent = "Temp: " + timeStamps[i].main.temp + "°F";
                         newDayEl.appendChild(newDayTemp);
 
                         var newDayHum = document.createElement('p');
