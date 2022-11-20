@@ -9,9 +9,11 @@ var searchHistoryList = [];
 var weatherData;
 var currentWeatherEl = document.getElementById('current-weather');
 var fiveDayForecastEl = document.getElementById("five-day");
-var timeStamps = []
+var timeStamps = [];
+
 // will need to figure this out eventually
 window.onload = renderSearchHistory();
+
 
 
 // var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
@@ -23,10 +25,11 @@ window.onload = renderSearchHistory();
 $("#search").click(function () {
     let searchText = $(this).siblings('textarea').val(); 
     search(searchText);
+    fiveDayForecastEl.style.border = "15px solid black";
 })
 
 function search(text) {
-    cityName = text; //$(this).siblings('textarea').val();  
+    cityName = text;  
     var queryURL = baseUrl + cityName + "&appid=" + APIKey + "&units=imperial";
     //    fetching data for the daily forecast
     fetch(queryURL, {})
@@ -70,11 +73,12 @@ function search(text) {
             
 function displayCurrentWeather() {
     currentWeatherEl.innerHTML = "";
+    currentWeatherEl.classList.add("current-day")
     var currentWeatherName = document.createElement('h2');
     currentWeatherName.textContent = weatherData.name;
     currentWeatherEl.appendChild(currentWeatherName);
 
-    var date = dayjs.unix(weatherData.dt) //.format('MMM D, YYYY, hh:mm:ss a');
+    var date = dayjs.unix(weatherData.dt).format('MMM D, YYYY, hh:mm:ss a');
     var currentWeatherDate = document.createElement('p');
     currentWeatherDate.textContent = date;
     currentWeatherEl.appendChild(currentWeatherDate);
@@ -101,6 +105,7 @@ function fiveDayForecast() {
     fiveDayForecastEl.innerHTML = ""
     for (var i = 0; i < timeStamps.length; i++) {
     var newDayEl = document.createElement('div');
+    newDayEl.classList.add("daily")
     fiveDayForecastEl.appendChild(newDayEl);
 
     var newDate = document.createElement('h3');
@@ -141,9 +146,9 @@ function appendLocalStorage() {
         if (searchArr.indexOf(cityName) !== -1) {
             return;
             }
-        searchArr.push(cityName) 
-        localStorage.setItem('city-name', JSON.stringify(searchArr))
-        renderSearchHistory()
+        searchArr.push(cityName);
+        localStorage.setItem('city-name', JSON.stringify(searchArr));
+        renderSearchHistory();
     }
 }
 

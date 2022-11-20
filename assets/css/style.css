@@ -1,4 +1,4 @@
-.search  {
+.search {
     width: 25%;
     height: 100%;
     background-color: var(--teal);
@@ -8,46 +8,72 @@
 }
 
 textarea {
-    display:flex;
-    display:inline-block;
-    width:90%;
-    resize:none;
+    display: flex;
+    display: inline-block;
+    width: 500px;
+    resize: none;
     border-radius: 10px;
-  }
-  
+}
+
 .search #search {
-    display:flex;
-    display:inline-block;
-    width:90%;
-    margin-bottom:-10px;
-    background-color: lightskyblue ;
+    /* display: flex;
+    display: inline-block; */
+    width: 500px;
+    margin-bottom: -10px;
+    background-color: lightskyblue;
     border-radius: 10px;
     color: white;
-    border:10px;
+    border: 10px;
 }
 
 header {
     display: flex;
     justify-content: center;
-    background-image: linear-gradient(to right, rgb(0, 195, 255) , rgb(4, 0, 255));
+    background-image: linear-gradient(to right, rgb(0, 195, 255), rgb(4, 0, 255));
     color: white;
 }
 
-#search-history button {
-    background-color: lightgrey ;
-    border-radius: 10px;
-    color: black;
-    border:10px;
+#column-1 h2 {
+    width: 500px;
 }
 
+#search-history button {
+    background-color: lightgrey;
+    border-radius: 10px;
+    color: black;
+    border: 15px;
+    width: 500px;
+
+}
+.column {
+    float: left;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+  }
+
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
 #column-1 {
-    display:flex;
-    display:block;
-    flex: 25%;
+    width: 33%;
 }
 
 #column-2 {
-    display:flex;
-    flex: 75%;
-    justify-content: end;
+    width: 66%;
 }
+
+.daily {
+    background-color: grey;
+    color: white;
+    border: 2px solid black ;
+    justify-content: center;
+    /* width: 500px; */
+}
+
+#current-day {
+    border: 2px solid black ;
+}
+

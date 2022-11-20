@@ -16,32 +16,34 @@
   <header>
     <h1>Weather Dashboard</h1>
   </header>
-<div id = "column-1">
-  <div class = "search">
-    <!-- This div will contain the search for city elements -->
-    <h2>Search for a City: </h2>
-    <textarea></textarea>
-    <button id="search" >Search</button>
-  </div>
+  <div class="row">
+    <div id="column-1" class = "column">
+      <div id = search-box class="search">
+        <!-- This div will contain the search for city elements -->
+        <h2>Search for a City: </h2>
+        <textarea></textarea>
+        <button id="search">Search</button>
+      </div>
 
-  <div class = "search">
-    <h2>Search History: </h2>
-    <ul id="search-history"></ul>
-    <!-- this div will hold the search history buttons -->
-    <!-- will need to create buttons when I render the cities in search history -->
-  </div>
-</div>
-  
-<div id = "column-2">
-  <div id="current-weather">
-    <!-- this div will hold the current weather conditions for the city -->
-  </div>
+      <div class="search">
+        <h2>Search History: </h2>
+        <div id="search-history"></div>
+        <!-- this div will hold the search history buttons -->
+        <!-- will need to create buttons when I render the cities in search history -->
+      </div>
+    </div>
 
-  <div id="five-day">
-    <!-- this div will hold the 5-day weather conditions for the city -->
-    <!-- might need to create divs for the 5 day forecast -->
+    <div id="column-2" class = "column">
+      <div id="current-weather">
+        <!-- this div will hold the current weather conditions for the city -->
+      </div>
+
+      <div id="five-day">
+        <!-- this div will hold the 5-day weather conditions for the city -->
+        <!-- might need to create divs for the 5 day forecast -->
+      </div>
+    </div>
   </div>
-</div>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="assets\js\script.js"></script>
 </body>
