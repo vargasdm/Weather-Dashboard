@@ -1,9 +1,9 @@
 var APIKey = "40a12dd5d21fb2676b3f9bbaa7760c97";
 var cityName;
 var searchHistory = document.getElementById('search-history');
-var baseUrl = "http://api.openweathermap.org/data/2.5/weather?q=";
-var fiveDayBaseUrl = "http://api.openweathermap.org/data/2.5/forecast?"
-var geocodeBaseUrl = "http://api.openweathermap.org/geo/1.0/direct?q="
+var baseUrl = "https://api.openweathermap.org/data/2.5/weather?q=";
+var fiveDayBaseUrl = "https://api.openweathermap.org/data/2.5/forecast?"
+var geocodeBaseUrl = "https://api.openweathermap.org/geo/1.0/direct?q="
 var searchArr = JSON.parse(localStorage.getItem("city-name")) || [];
 var searchHistoryList = [];
 var weatherData;
