@@ -2,14 +2,14 @@ var APIKey = "40a12dd5d21fb2676b3f9bbaa7760c97";
 var cityName;
 var searchHistory = document.getElementById('search-history');
 var baseUrl = "http://api.openweathermap.org/data/2.5/weather?q=";
-var fiveDayBaseUrl = "http://api.openweathermap.org/data/2.5/onecall?"
+var fiveDayBaseUrl = "http://api.openweathermap.org/data/2.5/forecast?"
 var geocodeBaseUrl = "http://api.openweathermap.org/geo/1.0/direct?q="
 var searchArr = localStorage.getItem("city-name") || [];
 var searchHistoryList = [];
 var weatherData;
 var currentWeatherEl = document.getElementById('current-weather');
 var fiveDayForecastEl = document.getElementById("five-day");
-
+var timeStamps = []
 // will need to figure this out eventually
 // window.onload = appendLocalStorage();
 
@@ -60,8 +60,15 @@ var fiveDayForecastEl = document.getElementById("five-day");
                     })
                     .then(function (data) {
                     console.log(data);
-                var fiveDayWeather = data
-                console.log(fiveDayWeather)
+                    
+                    // for loop to get the 12 pm weather indexes from data
+                    var fiveDayWeather = data.list;
+                for (var i = 0; i <= fiveDayWeather.length; i++) {
+                    if (fiveDayWeather[i].dt_txt === "2022-11-20 12:00:00" || fiveDayWeather[i].dt_txt === "2022-11-21 12:00:00" || fiveDayWeather[i].dt_txt === "2022-11-22 12:00:00" ||fiveDayWeather[i].dt_txt === "2022-11-23 12:00:00" ||fiveDayWeather[i].dt_txt === "2022-11-24 12:00:00")
+                    timeStamps.push(fiveDayWeather[i])
+                    console.log(timeStamps)
+                }
+
 // WHEN I view current weather conditions for that city
 // THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
                 function displayCurrentWeather() {
