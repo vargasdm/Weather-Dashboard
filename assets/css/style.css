@@ -16,8 +16,6 @@ textarea {
 }
 
 .search #search {
-    /* display: flex;
-    display: inline-block; */
     width: 500px;
     margin-bottom: -10px;
     background-color: lightskyblue;
@@ -48,7 +46,7 @@ header {
 .column {
     float: left;
     padding: 10px;
-    height: 300px; /* Should be removed. Only for demonstration */
+    height: 300px;
   }
 
   .row:after {
@@ -70,7 +68,6 @@ header {
     color: white;
     border: 2px solid black ;
     justify-content: center;
-    /* width: 500px; */
 }
 
 #current-day {

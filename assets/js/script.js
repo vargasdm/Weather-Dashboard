@@ -11,27 +11,20 @@ var currentWeatherEl = document.getElementById('current-weather');
 var fiveDayForecastEl = document.getElementById("five-day");
 var timeStamps = [];
 
-// will need to figure this out eventually
 window.onload = renderSearchHistory();
 
 
-
-// var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
-// WHEN I search for a city
-// THEN I am presented with current and future conditions for that city and that city is added to the search history
-    // need text area where I can input a city
-    // need a click event listener for search button
-        // need a function that will use the textarea input as parameters ( somhow convert the name into coordinates that can be used by the api ) for the fetch function
 $("#search").click(function () {
+    // sets variable to be the what the user puts in the text area
     let searchText = $(this).siblings('textarea').val(); 
     search(searchText);
-    fiveDayForecastEl.style.border = "15px solid black";
 })
 
 function search(text) {
     cityName = text;  
+    // api fetch request url for the current weather api
     var queryURL = baseUrl + cityName + "&appid=" + APIKey + "&units=imperial";
-    //    fetching data for the daily forecast
+    // fetching data for the daily forecast
     fetch(queryURL, {})
         .then(function (response) {
         return response.json();
@@ -40,7 +33,7 @@ function search(text) {
         console.log(data);
         weatherData = data;
         
-        // fetching data to get eh lat and lon values for the searched city to be used in teh 5 day forecast fetch request
+    // fetching data to for lat and lon values of the searched city to be used in the 5 day forecast fetch request url
     var queryGeoUrl = geocodeBaseUrl + cityName + "&appid=" + APIKey
     fetch(queryGeoUrl, {})
         .then(function (response) {
@@ -51,39 +44,43 @@ function search(text) {
             var geoLat = geoData[0].lat
             var geoLon = geoData[0].lon
 
-            // fetching data for the 5 day forcast
-            var queryFiveDayUrl = fiveDayBaseUrl + "lat=" + geoLat + "&lon=" + geoLon + "&appid=" + APIKey + "&units=imperial";
-            console.log(queryFiveDayUrl);
-        fetch(queryFiveDayUrl, {})
-            .then(function (response) {
-               return response.json();
-                })
-            .then(function (data) {
-                console.log(data);
+    // fetching data for the 5 day forcast
+    var queryFiveDayUrl = fiveDayBaseUrl + "lat=" + geoLat + "&lon=" + geoLon + "&appid=" + APIKey + "&units=imperial";
+    console.log(queryFiveDayUrl);
+    fetch(queryFiveDayUrl, {})
+        .then(function (response) {
+            return response.json();
+            })
+        .then(function (data) {
+            console.log(data);
                 
-                // for loop to get the 12 pm weather indexes from data
-            var fiveDayWeather = data.list;
-            var timeStamps = fiveDayWeather.filter(onePm);
-            function onePm(data) {
-                var parsedDate = dayjs.unix(data.dt);
-                return parsedDate.$H === 13;                   
-            }
-// WHEN I view current weather conditions for that city
-// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the the wind speed
-            
+    // for loop to get the 1 pm weather indexes from data
+    var fiveDayWeather = data.list;
+    // filters through the five day weather indexes using the onePm function
+    var timeStamps = fiveDayWeather.filter(onePm);
+    // function that returns values that are true for have a time of 1pm
+    function onePm(data) {
+        var parsedDate = dayjs.unix(data.dt);
+        return parsedDate.$H === 13;                   
+    }
+
+// function that creates the elements and adds the appropriate data to them
 function displayCurrentWeather() {
+    // resets the current weather element
     currentWeatherEl.innerHTML = "";
     currentWeatherEl.classList.add("current-day")
     var currentWeatherName = document.createElement('h2');
     currentWeatherName.textContent = weatherData.name;
     currentWeatherEl.appendChild(currentWeatherName);
 
+    // converts the dt property to a formatted date
     var date = dayjs.unix(weatherData.dt).format('MMM D, YYYY, hh:mm:ss a');
     var currentWeatherDate = document.createElement('p');
     currentWeatherDate.textContent = date;
     currentWeatherEl.appendChild(currentWeatherDate);
                 
     var currentWeatherIcon = document.createElement('img');
+    // stores the url for the corresponding icon code in a variable 
     var iconUrl = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
     currentWeatherIcon.setAttribute('src', iconUrl);
     currentWeatherEl.appendChild(currentWeatherIcon);
@@ -101,6 +98,7 @@ function displayCurrentWeather() {
     currentWeatherEl.appendChild(currentWeatherWind); 
     }
 
+// function that creates elements for each day and and the appropriate data to them
 function fiveDayForecast() {
     fiveDayForecastEl.innerHTML = ""
     for (var i = 0; i < timeStamps.length; i++) {
@@ -140,7 +138,7 @@ function fiveDayForecast() {
 }
 
 
-   // local storage
+// function that creates an array in the local storage that holds thee city names searched
 function appendLocalStorage() {
     if (cityName !== "") {
         if (searchArr.indexOf(cityName) !== -1) {
@@ -152,6 +150,7 @@ function appendLocalStorage() {
     }
 }
 
+// function that creates button elements with the searched city names
 function renderSearchHistory() {
     searchHistory.innerHTML = "";
         for (var i = 0; i < searchArr.length; i++) {
@@ -160,31 +159,9 @@ function renderSearchHistory() {
             let city = searchArr[i];
             searchHistoryItem.textContent = city;
             searchHistoryItem.classList.add("search-history-button")
+            // adds an onclick event listener to every button so when it tis clicked the stored name in the button is used to re search the weather data for that city
             searchHistoryItem.setAttribute("onclick", `search("${city}")`)
             searchHistoryItem.style.display = "block";
             searchHistory.appendChild(searchHistoryItem); 
         }
     };
-
-
-          
-
-
-            // need fetch function to grab current city name, date, icon that represents weather conditions (Im not sure if that is somehting included in the api or something I have to make), temp, humidity, and windspeed all based on teh input from the text area
-                // this info will need to be rendered to speciofic div 
-            
-// WHEN I view future weather conditions for that city
-// THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-                // need another fetch function to grabs the 5-day forecast date, icon that represents weather conditions (Im not sure if that is somehting included in the api or something I have to make), temp, humidity, and windspeed all based on teh input from the text area
-                // not sure if it will all go in one div or 5 different divs for each date
-        // need function that will save the data that is fetched in other functions (current and 5 day forecast) to the local storage as an object or an object array????????? (with each  of teh fetch parameters as properties?????  if so then I need to strigify the data??????)
-        // need a function that creates a button with the key of the stored city data displayed
-            // might need to use for loop to create the buttons and render the names of the cities in previously stored object array ???????
-    
-    
-// WHEN I click on a city in the search history
-// THEN I am again presented with current and future conditions for that city  
-            // need click event listener (similar to one in daily planner that runs no matter what button is clicked) the executes code when button from search history is clicked
-        // need a function that pulls the data stored in the local storage back to thier appropriate divs
-
-
