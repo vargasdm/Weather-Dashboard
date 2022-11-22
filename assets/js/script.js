@@ -2,8 +2,8 @@ var APIKey = "40a12dd5d21fb2676b3f9bbaa7760c97";
 var cityName;
 var searchHistory = document.getElementById('search-history');
 var baseUrl = "https://api.openweathermap.org/data/2.5/weather?q=";
-var fiveDayBaseUrl = "https://api.openweathermap.org/data/2.5/forecast?"
-var geocodeBaseUrl = "https://api.openweathermap.org/geo/1.0/direct?q="
+var fiveDayBaseUrl = "https://api.openweathermap.org/data/2.5/forecast?";
+var geocodeBaseUrl = "https://api.openweathermap.org/geo/1.0/direct?q=";
 var searchArr = JSON.parse(localStorage.getItem("city-name")) || [];
 var searchHistoryList = [];
 var weatherData;
@@ -34,15 +34,15 @@ function search(text) {
         weatherData = data;
         
     // fetching data to for lat and lon values of the searched city to be used in the 5 day forecast fetch request url
-    var queryGeoUrl = geocodeBaseUrl + cityName + "&appid=" + APIKey
+    var queryGeoUrl = geocodeBaseUrl + cityName + "&appid=" + APIKey;
     fetch(queryGeoUrl, {})
         .then(function (response) {
             return response.json();
             })
         .then(function (data) {
-            var geoData = data
-            var geoLat = geoData[0].lat
-            var geoLon = geoData[0].lon
+            var geoData = data;
+            var geoLat = geoData[0].lat;
+            var geoLon = geoData[0].lon;
 
     // fetching data for the 5 day forcast
     var queryFiveDayUrl = fiveDayBaseUrl + "lat=" + geoLat + "&lon=" + geoLon + "&appid=" + APIKey + "&units=imperial";
@@ -68,7 +68,7 @@ function search(text) {
 function displayCurrentWeather() {
     // resets the current weather element
     currentWeatherEl.innerHTML = "";
-    currentWeatherEl.classList.add("current-day")
+    currentWeatherEl.classList.add("current-day");
     var currentWeatherName = document.createElement('h2');
     currentWeatherName.textContent = weatherData.name;
     currentWeatherEl.appendChild(currentWeatherName);
@@ -100,14 +100,14 @@ function displayCurrentWeather() {
 
 // function that creates elements for each day and and the appropriate data to them
 function fiveDayForecast() {
-    fiveDayForecastEl.innerHTML = ""
+    fiveDayForecastEl.innerHTML = "";
     for (var i = 0; i < timeStamps.length; i++) {
     var newDayEl = document.createElement('div');
-    newDayEl.classList.add("daily")
+    newDayEl.classList.add("daily");
     fiveDayForecastEl.appendChild(newDayEl);
 
     var newDate = document.createElement('h3');
-    var newDayDate = dayjs.unix(timeStamps[i].dt).format('MMM D, YYYY, hh:mm:ss a')
+    var newDayDate = dayjs.unix(timeStamps[i].dt).format('MMM D, YYYY, hh:mm:ss a');
     newDate.textContent = newDayDate;
     newDayEl.appendChild(newDate);
 
@@ -131,7 +131,7 @@ function fiveDayForecast() {
 }
         appendLocalStorage();
         displayCurrentWeather();
-        fiveDayForecast()
+        fiveDayForecast();
             });   
         });
     })
@@ -154,14 +154,14 @@ function appendLocalStorage() {
 function renderSearchHistory() {
     searchHistory.innerHTML = "";
         for (var i = 0; i < searchArr.length; i++) {
-            localStorage.getItem("city-name")
+            localStorage.getItem("city-name");
             var searchHistoryItem = document.createElement('button');
             let city = searchArr[i];
             searchHistoryItem.textContent = city;
-            searchHistoryItem.classList.add("search-history-button")
+            searchHistoryItem.classList.add("search-history-button");
             // adds an onclick event listener to every button so when it tis clicked the stored name in the button is used to re search the weather data for that city
-            searchHistoryItem.setAttribute("onclick", `search("${city}")`)
+            searchHistoryItem.setAttribute("onclick", `search("${city}")`);
             searchHistoryItem.style.display = "block";
             searchHistory.appendChild(searchHistoryItem); 
-        }
+        };
     };
