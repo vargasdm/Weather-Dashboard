@@ -26,7 +26,7 @@ During this project I learned:
 - [Credits](#credits)
 - [License](#license)
 
-##Usage
+## Usage
 
 When the page is opened, you are presented with a text area and a search button, where you will input the city of your choice. After the user inputs a city and click search, the current weather data, as well as the 5-day weather forecast data will display, This includes: city name, date, time, icon that represents the current weather, temperature, humidy, and wind speed. At the same time, the searched city name will be stored in local storage and a button will be created with that city's name under the search history section of the page. When the user clicks a button in the search history section with a searched cities name, they will be shown the updated weather information.
 
